@@ -15,12 +15,21 @@ if (process.env.CLIENT_URL) {
   allowedOrigins.push(process.env.CLIENT_URL);
 }
 if (process.env.NODE_ENV !== 'production') {
-  allowedOrigins.push('http://localhost:5173', 'http://localhost:3000');
+  allowedOrigins.push(
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'http://127.0.0.1:5173',
+    'http://127.0.0.1:3000'
+  );
 }
 
 app.use(
   cors({
     origin(origin, callback) {
+      if (process.env.NODE_ENV !== 'production') {
+        callback(null, true);
+        return;
+      }
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
