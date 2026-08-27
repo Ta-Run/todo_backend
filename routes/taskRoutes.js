@@ -12,6 +12,7 @@ const router = express.Router();
 
 router.use(auth);
 
+
 router.post('/', createTask);
 router.get('/', getTasks);
 router.get('/:id', getTask);
